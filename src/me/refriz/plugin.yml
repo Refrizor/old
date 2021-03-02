@@ -1,0 +1,25 @@
+name: Inferris
+version: 1.0
+api-version: 1.16
+main: me.refriz.Inferris
+description: Inferris system
+author: Refriz
+prefix: INFERRIS
+
+commands:
+  connector:
+    description: Test
+  rankchecker:
+    description: Rankchecker
+  setrank:
+    description: Setrank
+  admin:
+    description: Admin
+  vanish:
+    description: Vanish
+  fly:
+    description: Fly
+  invsee:
+    description: Invsee
+  coins:
+    description: Coins
