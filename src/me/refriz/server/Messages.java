@@ -23,7 +23,8 @@ public enum Messages {
         QUEST_FINISH(ChatColor.GREEN + "Quest completed: " + ChatColor.YELLOW),
         QUEST_ASSIGN(ChatColor.GREEN + "Quest assigned: " + ChatColor.YELLOW),
         QUEST_UNASSIGN(ChatColor.GREEN + "Quest unassigned: " + ChatColor.YELLOW),
-        QUEST_NEW(Messages.SPECIAL.getMessage() + ChatColor.GREEN + " New quest discovered: " + ChatColor.YELLOW);
+        QUEST_NEW(Messages.SPECIAL.getMessage() + ChatColor.GREEN + " New quest discovered: " + ChatColor.YELLOW),
+        INSUFFICIENT_BALANCE(ChatColor.RED + "Insufficient balance!");
 
         private final String message;
 

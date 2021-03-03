@@ -5,6 +5,8 @@ import me.refriz.midstforth.quests.Quest;
 import me.refriz.ranks.Rank;
 import me.refriz.server.Messages;
 import me.refriz.midstforth.engines.EngineMenu;
+import me.refriz.server.SQLHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -48,6 +50,26 @@ public class CommandAdmin implements CommandExecutor {
 
                     if(args[0].equalsIgnoreCase("finishquest")){
                         Quest.completeQuest(player, "test", "John", 0);
+                    }
+                }
+                if(length == 2){
+                    if(args[0].equalsIgnoreCase("nukemid")){
+                        Player target = Bukkit.getPlayer(args[1]);
+
+                        SQLHandler.action("DELETE FROM `locations` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `midstforth_economy` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `played_midstforth` WHERE `uuid` = '" + target.getUniqueId() + "'");
+
+                        player.sendMessage(ChatColor.GREEN + "Operation successful");
+                        target.kickPlayer(ChatColor.GREEN + "Data reset");
+                    }
+                    if(args[0].equalsIgnoreCase("nuke")){
+                        Player target = Bukkit.getPlayer(args[1]);
+
+                        SQLHandler.action("DELETE FROM `ranks` WHERE `uuid` = '" + target.getUniqueId() + "'");
+
+                        player.sendMessage(ChatColor.GREEN + "Operation successful");
+                        target.kickPlayer(ChatColor.GREEN + "Data reset");
                     }
                 }
             } else {

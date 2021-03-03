@@ -3,6 +3,7 @@ package me.refriz.midstforth.engines;
 import me.refriz.midstforth.Economy;
 import me.refriz.midstforth.Midstforth;
 import me.refriz.server.DatabaseConnector;
+import me.refriz.server.Messages;
 import me.refriz.server.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,7 +42,6 @@ public class EngineMenu implements Listener {
             if (PlayerUtils.clickedMenuItem(event, Engines.ENGINE_1.getName())){
 
                 if(getEngine == 1){
-
                 }
             }
 
@@ -58,7 +58,7 @@ public class EngineMenu implements Listener {
                             player.sendMessage(e.getMessage());
                         }
                     }else{
-                        player.sendMessage(ChatColor.RED + "Not enough money!");
+                        player.sendMessage(Messages.Midstforth.INSUFFICIENT_BALANCE.getMessage());
                     }
                 }
             }
@@ -76,7 +76,7 @@ public class EngineMenu implements Listener {
                             player.sendMessage(e.getMessage());
                         }
                     }else{
-                        player.sendMessage(ChatColor.RED + "Not enough money!");
+                        player.sendMessage(Messages.Midstforth.INSUFFICIENT_BALANCE.getMessage());
                     }
                 }
             }
