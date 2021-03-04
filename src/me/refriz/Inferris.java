@@ -32,6 +32,7 @@ public class Inferris extends JavaPlugin {
         getCommand("invsee").setExecutor(new CommandInvsee());
         getCommand("coins").setExecutor(new CommandCoins());
         getCommand("stats").setExecutor(new CommandStats());
+        getCommand("quest").setExecutor(new CommandQuest());
 
         Initializer.init();
 

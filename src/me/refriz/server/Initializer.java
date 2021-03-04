@@ -6,6 +6,7 @@ import me.refriz.events.JoinEvent;
 import me.refriz.events.QuitEvent;
 import me.refriz.lobby.Lobby;
 import me.refriz.midstforth.engines.EngineMenu;
+import me.refriz.midstforth.quests.Dialogue;
 import me.refriz.ranks.Rank;
 import org.bukkit.plugin.PluginManager;
 
@@ -20,6 +21,7 @@ public class Initializer {
         pluginManager.registerEvents(new Lobby(), Inferris.getInstance());
         pluginManager.registerEvents(new SpamFilter(), Inferris.getInstance());
         pluginManager.registerEvents(new EngineMenu(), Inferris.getInstance());
+        pluginManager.registerEvents(new Dialogue(), Inferris.getInstance());
 
         Rank.deployTeams();
 

@@ -1,6 +1,7 @@
 package me.refriz.commands;
 
 import me.refriz.infractions.Ban;
+import me.refriz.midstforth.npc.NPCs;
 import me.refriz.midstforth.quests.Quest;
 import me.refriz.ranks.Rank;
 import me.refriz.server.Messages;
@@ -11,6 +12,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class CommandAdmin implements CommandExecutor {
@@ -51,6 +55,15 @@ public class CommandAdmin implements CommandExecutor {
                     if(args[0].equalsIgnoreCase("finishquest")){
                         Quest.completeQuest(player, "test", "John", 0);
                     }
+
+                    if(args[0].equalsIgnoreCase("s")){
+                        LivingEntity entity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), EntityType.VILLAGER);
+                        entity.setAI(false);
+                        entity.setCollidable(true);
+                        entity.setInvulnerable(true);
+                        entity.setRemoveWhenFarAway(false);
+                        entity.setCustomName(NPCs.RALPH.getName());
+                    }
                 }
                 if(length == 2){
                     if(args[0].equalsIgnoreCase("nukemid")){
@@ -59,6 +72,10 @@ public class CommandAdmin implements CommandExecutor {
                         SQLHandler.action("DELETE FROM `locations` WHERE `uuid` = '" + target.getUniqueId() + "'");
                         SQLHandler.action("DELETE FROM `midstforth_economy` WHERE `uuid` = '" + target.getUniqueId() + "'");
                         SQLHandler.action("DELETE FROM `played_midstforth` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `quests` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `active_quests` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `finished_quests` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `engines` WHERE `uuid` = '" + target.getUniqueId() + "'");
 
                         player.sendMessage(ChatColor.GREEN + "Operation successful");
                         target.kickPlayer(ChatColor.GREEN + "Data reset");

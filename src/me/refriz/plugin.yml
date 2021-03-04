@@ -25,3 +25,5 @@ commands:
     description: Coins
   stats:
     description: Stats
+  quest:
+    description: Quest
