@@ -4,7 +4,7 @@ import me.refriz.midstforth.npc.NPCs;
 
 public enum Quests {
     TEST_2("Test 2", NPCs.RALPH.getName(), 10),
-    TEST_1("Test 1", NPCs.RALPH.getName(), 5);
+    TEST_1("Discovery", NPCs.RALPH.getName(), 5);
 
     private final String name;
     private final String npc;

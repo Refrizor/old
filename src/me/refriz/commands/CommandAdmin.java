@@ -52,10 +52,6 @@ public class CommandAdmin implements CommandExecutor {
                         Quest.assignQuest(player, "test");
                     }
 
-                    if(args[0].equalsIgnoreCase("finishquest")){
-                        Quest.completeQuest(player, "test", "John", 0);
-                    }
-
                     if(args[0].equalsIgnoreCase("s")){
                         LivingEntity entity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), EntityType.VILLAGER);
                         entity.setAI(false);
@@ -87,6 +83,10 @@ public class CommandAdmin implements CommandExecutor {
 
                         player.sendMessage(ChatColor.GREEN + "Operation successful");
                         target.kickPlayer(ChatColor.GREEN + "Data reset");
+                    }
+
+                    if(args[0].equalsIgnoreCase("finishquest")){
+                        Quest.completeQuest(player, args[1], "John", 20);
                     }
                 }
             } else {

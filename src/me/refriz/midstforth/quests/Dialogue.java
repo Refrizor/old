@@ -12,12 +12,29 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class Dialogue implements Listener {
 
-    public static void deploy(Player player, Object npc, Object quest, String line) {
+    public static void deploy(Player player, Object npc, Object quest) {
 
-        if (!Quest.hasQuest(player, quest)) {
+        if (!Quest.hasQuest(player, quest) && !(Quest.hasFinishedQuest(player, quest))) {
+            sendDialogue1(player, npc, quest);
 
-            player.sendMessage(line);
+
+        }
+    }
+
+    public static void sendDialogue1(Player player, Object npc, Object quest) {
+        if (npc == NPCs.RALPH.getName()) {
+            player.sendMessage(Lines.Ralph.TEST.getMessage());
             Quest.addQuest(player, quest.toString());
+        }
+    }
+
+    @EventHandler
+    public void onClick(PlayerInteractAtEntityEvent event){
+        if(clicked(event, NPCs.RALPH.getName(), NPCs.RALPH.getType())){
+            event.setCancelled(true);
+            Player player = event.getPlayer();
+
+            deploy(player, NPCs.RALPH.getName(), Quests.TEST_1.getName());
         }
     }
 
@@ -28,15 +45,5 @@ public class Dialogue implements Listener {
             }
         }
         return false;
-    }
-
-    @EventHandler
-    public void onClick(PlayerInteractAtEntityEvent event){
-        if(clicked(event, NPCs.RALPH.getName(), NPCs.RALPH.getType())){
-            event.setCancelled(true);
-            Player player = event.getPlayer();
-
-            deploy(player, NPCs.RALPH.getName(), Quests.TEST_1.getName(), Lines.Ralph.TEST.getMessage());
-        }
     }
 }

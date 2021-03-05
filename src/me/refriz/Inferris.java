@@ -1,6 +1,7 @@
 package me.refriz;
 
 import me.refriz.commands.*;
+import me.refriz.midstforth.quests.Quests;
 import me.refriz.server.Initializer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +34,7 @@ public class Inferris extends JavaPlugin {
         getCommand("coins").setExecutor(new CommandCoins());
         getCommand("stats").setExecutor(new CommandStats());
         getCommand("quest").setExecutor(new CommandQuest());
+        getCommand("quests").setExecutor(new CommandQuests());
 
         Initializer.init();
 
