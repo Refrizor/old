@@ -78,15 +78,28 @@ public class PlayerData {
         return false;
     }
 
-    public static HashMap<String, Integer> getStaffBranchID() {
+    public static int getStaffBranchID(Player player) {
+        return staffBranchID.get(player.getName());
+    }
+
+    public static HashMap<String, Integer> getStaffBranch() {
         return staffBranchID;
     }
 
-    public static HashMap<String, Integer> getDonorBranchID() {
+    public static int getDonorBranchID(Player player) {
+        return donorBranchID.get(player.getName());
+    }
+
+
+    public static HashMap<String, Integer> getDonorBranch() {
         return donorBranchID;
     }
 
-    public static HashMap<String, Integer> getBuilderBranchID() {
+    public static int getBuilderBranchID(Player player) {
+        return builderBranchID.get(player.getName());
+    }
+
+    public static HashMap<String, Integer> getBuilderBranch() {
         return builderBranchID;
     }
 

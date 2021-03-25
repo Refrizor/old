@@ -19,7 +19,7 @@ public class CommandInvsee implements CommandExecutor {
 
         try {
 
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 3) {
+            if(PlayerData.getStaffBranchID(player) >=3) {
                 if (length == 0 || length > 2) {
                     player.sendMessage(ChatColor.RED + "Usage: /invsee <player>");
                 }

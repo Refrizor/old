@@ -41,9 +41,9 @@ public class CommandSetrank implements CommandExecutor {
                         PreparedStatement update = connection.prepareStatement("UPDATE `ranks` SET `" + branch + "` = " + id + " WHERE `uuid` = '" + target.getUniqueId() + "'");
                         update.execute();
 
-                        PlayerData.getDonorBranchID().remove(target.getName());
-                        PlayerData.getStaffBranchID().remove(target.getName());
-                        PlayerData.getBuilderBranchID().remove(target.getName());
+                        PlayerData.getDonorBranch().remove(target.getName());
+                        PlayerData.getStaffBranch().remove(target.getName());
+                        PlayerData.getBuilderBranch().remove(target.getName());
 
                         Rank.ADMIN.getRank().remove(target);
                         Rank.MOD.getRank().remove(target);

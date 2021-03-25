@@ -61,16 +61,16 @@ public class JoinEvent implements Listener {
 
     public static void joinMessage(Player player, PlayerJoinEvent event) {
 
-        if (PlayerData.getStaffBranchID().get(player.getName()) == 3) {
+        if (PlayerData.getStaffBranchID(player) == 3) {
             event.setJoinMessage(Rank.ADMIN.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
         }
 
-        if (PlayerData.getDonorBranchID().get(player.getName()) == 0) {
+        if (PlayerData.getDonorBranchID(player) == 0) {
 
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 1) {
+            if (PlayerData.getStaffBranchID(player) == 1) {
                 event.setJoinMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 2) {
+            if (PlayerData.getStaffBranchID(player) == 2) {
                 event.setJoinMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
             }
         } else {
@@ -79,21 +79,21 @@ public class JoinEvent implements Listener {
             Donor section
              */
 
-            if (PlayerData.getDonorBranchID().get(player.getName()) == 1) {
-                if (PlayerData.getStaffBranchID().get(player.getName()) == 0) {
+            if (PlayerData.getDonorBranchID(player) == 1) {
+                if (PlayerData.getStaffBranchID(player) == 0) {
                     event.setJoinMessage(Rank.DONOR.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
                 }
             }
-            if (PlayerData.getDonorBranchID().get(player.getName()) == 2) {
-                if (PlayerData.getStaffBranchID().get(player.getName()) == 0) {
+            if (PlayerData.getDonorBranchID(player) == 2) {
+                if (PlayerData.getStaffBranchID(player) == 0) {
                     event.setJoinMessage(Rank.DONOR2.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
                 }
             }
 
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 1) {
+            if (PlayerData.getStaffBranchID(player) == 1) {
                 event.setJoinMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 2) {
+            if (PlayerData.getStaffBranchID(player) == 2) {
                 event.setJoinMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
             }
         }

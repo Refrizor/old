@@ -15,7 +15,7 @@ public class CommandFly implements CommandExecutor {
 
         try {
 
-            if (PlayerData.getStaffBranchID().get(player.getName()) >= 2) {
+            if(PlayerData.getStaffBranchID(player) >=2) {
 
                 if (player.getAllowFlight()) {
                     player.setAllowFlight(false);

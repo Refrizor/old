@@ -18,7 +18,7 @@ public class CommandCoins implements CommandExecutor {
 
         int getBalance = 0;
 
-        if (PlayerData.getStaffBranchID().get(player.getName()) == 3) {
+        if(PlayerData.getStaffBranchID(player) >=3) {
             if (length == 0) {
                 player.sendMessage(ChatColor.AQUA + "Coins: " + ChatColor.YELLOW +  Coins.retrieve(player));
             }

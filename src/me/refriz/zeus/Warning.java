@@ -22,6 +22,3 @@ public class Warning {
         }
     }
 }
-
-
-// right syntax to use near '7d16b15d-bb22-4a6d-80db-6213b3d75007')' at line 1

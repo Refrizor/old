@@ -18,7 +18,7 @@ public class CommandInfractions implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         Player player = (Player) sender;
-        if(PlayerData.getStaffBranchID().get(player.getName()) >=2){
+        if(PlayerData.getStaffBranchID(player) >=2) {
             int length = args.length;
 
             if(length == 1){

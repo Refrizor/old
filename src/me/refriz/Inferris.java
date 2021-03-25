@@ -44,6 +44,7 @@ public class Inferris extends JavaPlugin {
         getCommand("ban").setExecutor(new CommandBan());
         getCommand("unban").setExecutor(new CommandUnban());
         getCommand("warn").setExecutor(new CommandWarn());
+        getCommand("kick").setExecutor(new CommandKick());
 
         Initializer.init();
 

@@ -1,10 +1,9 @@
 package me.refriz.midstforth.quests;
 
 import me.refriz.midstforth.Economy;
-import me.refriz.server.DatabaseConnector;
-import me.refriz.server.Messages;
-import me.refriz.server.SQLHandler;
+import me.refriz.server.*;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -65,6 +64,7 @@ public class Quest {
                 player.sendMessage(Messages.SPECIAL.getMessage() + Messages.QUEST_FINISH.getMessage() + Messages.QUEST_NAME.getMessage() + questName);
 
                 Economy.add(player, reward);
+                PlayerUtils.playSound(player, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1F);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -10,7 +10,7 @@ public class Permission {
     public void deployPermissions(Player player){
         PermissionAttachment attachment = player.addAttachment(Inferris.getInstance());
 
-        if(PlayerData.getStaffBranchID().get(player.getName()) == 1){
+        if(PlayerData.getStaffBranchID(player) >=1) {
             attachment.setPermission("test1", true);
         }
     }

@@ -74,9 +74,9 @@ public class RankReceiver {
         For whatever the queries above are
          */
 
-        PlayerData.getDonorBranchID().put(player.getName(), donor);
-        PlayerData.getStaffBranchID().put(player.getName(), staff);
-        PlayerData.getBuilderBranchID().put(player.getName(), builder);
+        PlayerData.getDonorBranch().put(player.getName(), donor);
+        PlayerData.getStaffBranch().put(player.getName(), staff);
+        PlayerData.getBuilderBranch().put(player.getName(), builder);
 
         new Permission().deployPermissions(player);
         new Tab().deploy(player);

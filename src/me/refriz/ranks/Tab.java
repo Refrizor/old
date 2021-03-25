@@ -9,45 +9,45 @@ public class Tab {
 
     public void deploy(Player player){
 
-        if(PlayerData.getDonorBranchID().get(player.getName()) == 0) {
+        if(PlayerData.getDonorBranchID(player) == 0) {
 
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 3) {
+            if (PlayerData.getStaffBranchID(player) == 3) {
                 adminTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 2) {
+            if (PlayerData.getStaffBranchID(player) == 2) {
                 modTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 1) {
+            if (PlayerData.getStaffBranchID(player) == 1) {
                 helperTeam.addEntry(player.getName());
             }
         }
 
-        if(PlayerData.getDonorBranchID().get(player.getName()) == 1) {
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 3) {
+        if(PlayerData.getDonorBranchID(player) == 1) {
+            if (PlayerData.getStaffBranchID(player) == 3) {
                 adminTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 2) {
+            if (PlayerData.getStaffBranchID(player) == 2) {
                 modTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 1) {
+            if (PlayerData.getStaffBranchID(player) == 1) {
                 helperTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 0) {
+            if (PlayerData.getStaffBranchID(player) == 0) {
                 donor1Team.addEntry(player.getName());
             }
         }
 
-        if(PlayerData.getDonorBranchID().get(player.getName()) == 2) {
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 3) {
+        if(PlayerData.getDonorBranchID(player) == 2) {
+            if (PlayerData.getStaffBranchID(player) == 3) {
                 adminTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 2) {
+            if (PlayerData.getStaffBranchID(player) == 2) {
                 modTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 1) {
+            if (PlayerData.getStaffBranchID(player) == 1) {
                 helperTeam.addEntry(player.getName());
             }
-            if (PlayerData.getStaffBranchID().get(player.getName()) == 0) {
+            if (PlayerData.getStaffBranchID(player) == 0) {
                 donor2Team.addEntry(player.getName());
             }
         }

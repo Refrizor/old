@@ -176,9 +176,9 @@ public enum Rank {
     }
 
     public static void refresh(Player player) {
-        PlayerData.getDonorBranchID().remove(player.getName());
-        PlayerData.getStaffBranchID().remove(player.getName());
-        PlayerData.getBuilderBranchID().remove(player.getName());
+        PlayerData.getDonorBranch().remove(player.getName());
+        PlayerData.getStaffBranch().remove(player.getName());
+        PlayerData.getBuilderBranch().remove(player.getName());
 
         Rank.ADMIN.getRank().remove(player);
         Rank.MOD.getRank().remove(player);

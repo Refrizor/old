@@ -43,3 +43,5 @@ commands:
     description: Unban
   warn:
     description: Warn
+  kick:
+    description: Kick
