@@ -58,7 +58,7 @@ public class EngineMenu implements Listener {
                             player.sendMessage(e.getMessage());
                         }
                     }else{
-                        player.sendMessage(Messages.Midstforth.INSUFFICIENT_BALANCE.getMessage());
+                        player.sendMessage(Messages.INSUFFICIENT_BALANCE.getMessage());
                     }
                 }
             }
@@ -76,7 +76,7 @@ public class EngineMenu implements Listener {
                             player.sendMessage(e.getMessage());
                         }
                     }else{
-                        player.sendMessage(Messages.Midstforth.INSUFFICIENT_BALANCE.getMessage());
+                        player.sendMessage(Messages.INSUFFICIENT_BALANCE.getMessage());
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package me.refriz.commands;
 
-import me.refriz.infractions.Ban;
+import me.refriz.zeus.Ban;
+import me.refriz.midstforth.SpacesuitItemdata;
 import me.refriz.midstforth.npc.NPCs;
 import me.refriz.midstforth.quests.Quest;
 import me.refriz.ranks.Rank;
@@ -12,7 +13,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -38,10 +38,6 @@ public class CommandAdmin implements CommandExecutor {
                         player.sendMessage(ChatColor.GREEN + "Refreshed");
                     }
 
-                    if (args[0].equalsIgnoreCase("ban")) {
-                        Ban.init(player, player.getName(), "Hacks");
-                    }
-
                     if (args[0].equalsIgnoreCase("ship")) {
                         new EngineMenu().deploy(player);
                     }
@@ -59,6 +55,12 @@ public class CommandAdmin implements CommandExecutor {
                         entity.setInvulnerable(true);
                         entity.setRemoveWhenFarAway(false);
                         entity.setCustomName(NPCs.RALPH.getName());
+                    }
+                    if(args[0].equalsIgnoreCase("spacesuit")){
+                        player.getInventory().setHelmet(SpacesuitItemdata.getHelmet());
+                        player.getInventory().setHelmet(SpacesuitItemdata.getChestplate());
+                        player.getInventory().setHelmet(SpacesuitItemdata.getLeggings());
+                        player.getInventory().setHelmet(SpacesuitItemdata.getBoots());
                     }
                 }
                 if(length == 2){

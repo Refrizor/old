@@ -21,7 +21,7 @@ public class CommandQuests implements CommandExecutor {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM quests WHERE `uuid` = '" + player.getUniqueId() + "'");
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder(); 
             while(resultSet.next()){
                 String quests = resultSet.getString(1);
                 stringBuilder.append(ChatColor.AQUA).append(quests).append(ChatColor.RESET).append(", ");
@@ -30,7 +30,7 @@ public class CommandQuests implements CommandExecutor {
 
             player.sendMessage(ChatColor.GREEN + "--- QUEST LIST ---\n" + quests);
         }catch(Exception e){
-            e.printStackTrace();
+            player.sendMessage(ChatColor.RED + "No quests found!");
         }
         return true;
     }

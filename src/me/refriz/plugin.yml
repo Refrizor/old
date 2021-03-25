@@ -29,3 +29,17 @@ commands:
     description: Quest
   quests:
     description: Quests
+  balance:
+    description: Balance
+  mute:
+    description: Mute
+  unmute:
+    description: Unmute
+  inf:
+    description: Infractions
+  ban:
+    description: Ban
+  unban:
+    description: Unban
+  warn:
+    description: Warn

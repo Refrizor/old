@@ -1,6 +1,6 @@
 package me.refriz.events;
 
-import me.refriz.infractions.Ban;
+import me.refriz.zeus.Ban;
 import me.refriz.Lobby;
 import me.refriz.Coins;
 import me.refriz.Inferris;
@@ -28,6 +28,10 @@ public class JoinEvent implements Listener {
 
         if(!Midstforth.hasPlayed(player)){
             Midstforth.insert(player);
+        }
+
+        if(PlayerData.isMuted(player)){
+            PlayerData.getMuted().add(player.getName());
         }
 
 

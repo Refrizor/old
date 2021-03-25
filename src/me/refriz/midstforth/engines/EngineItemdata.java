@@ -77,7 +77,7 @@ public class EngineItemdata {
                 if(engine >= 3){
                     result = getOwned();
                 }else{
-                    result = getPurchase();
+                    result = getPurchase() + Engines.ENGINE_3.getCost();
                 }
             }
 
@@ -86,7 +86,7 @@ public class EngineItemdata {
                 if(engine >= 2){
                     result = getOwned();
                 }else{
-                    result = getPurchase();
+                    result = getPurchase() + Engines.ENGINE_2.getCost();
                 }
             }
 
@@ -95,7 +95,7 @@ public class EngineItemdata {
                 if(engine >= 1){
                     result = getOwned();
                 }else{
-                    result = getPurchase();
+                    result = getPurchase() + Engines.ENGINE_1.getCost();
                 }
             }
 

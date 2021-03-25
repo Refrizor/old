@@ -36,6 +36,10 @@ public class CommandQuest implements CommandExecutor {
 
             if (questName != null) {
                 player.sendMessage(ChatColor.GREEN + "Current quest: " + ChatColor.WHITE + questName);
+
+                if(questName == Quests.TEST_1.getName()){
+                    player.sendMessage(Quests.TEST_1.getDescription());
+                }
             } else {
                 player.sendMessage(ChatColor.GREEN + "Current quest: " + ChatColor.RED + "No active quest");
             }

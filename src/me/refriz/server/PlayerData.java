@@ -1,19 +1,24 @@
 package me.refriz.server;
 
 import me.refriz.ranks.Rank;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerData {
 
     private static final HashMap<String, Integer> staffBranchID = new HashMap<>();
     private static final HashMap<String, Integer> donorBranchID = new HashMap<>();
     private static final HashMap<String, Integer> builderBranchID = new HashMap<>();
+
+    private static final List<String> muted = new ArrayList<>();
 
     private static int id;
 
@@ -57,6 +62,22 @@ public class PlayerData {
         return true;
     }
 
+    public static boolean isMuted(OfflinePlayer player){
+        try{
+            Connection connection = DatabaseConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM active_mutes WHERE `uuid` = ?");
+            preparedStatement.setString(1, String.valueOf(player.getUniqueId()));
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                return true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static HashMap<String, Integer> getStaffBranchID() {
         return staffBranchID;
     }
@@ -67,5 +88,9 @@ public class PlayerData {
 
     public static HashMap<String, Integer> getBuilderBranchID() {
         return builderBranchID;
+    }
+
+    public static List<String> getMuted() {
+        return muted;
     }
 }

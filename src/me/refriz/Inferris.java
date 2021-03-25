@@ -3,7 +3,9 @@ package me.refriz;
 import me.refriz.commands.*;
 import me.refriz.midstforth.quests.Quests;
 import me.refriz.server.Initializer;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -35,6 +37,13 @@ public class Inferris extends JavaPlugin {
         getCommand("stats").setExecutor(new CommandStats());
         getCommand("quest").setExecutor(new CommandQuest());
         getCommand("quests").setExecutor(new CommandQuests());
+        getCommand("balance").setExecutor(new CommandBalance());
+        getCommand("mute").setExecutor(new CommandMute());
+        getCommand("unmute").setExecutor(new CommandUnmute());
+        getCommand("inf").setExecutor(new CommandInfractions());
+        getCommand("ban").setExecutor(new CommandBan());
+        getCommand("unban").setExecutor(new CommandUnban());
+        getCommand("warn").setExecutor(new CommandWarn());
 
         Initializer.init();
 
@@ -58,5 +67,11 @@ public class Inferris extends JavaPlugin {
 
     public static FileConfiguration getFileConfig(){
         return instance.getConfig();
+    }
+
+    public static void sendGlobalMessage(String message){
+        for(Player all : Bukkit.getServer().getOnlinePlayers()){
+            all.sendMessage(message);
+        }
     }
 }
