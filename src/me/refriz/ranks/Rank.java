@@ -1,15 +1,15 @@
 package me.refriz.ranks;
 
 import me.refriz.Inferris;
-import me.refriz.events.RankReceiver;
+import me.refriz.server.DatabaseConnector;
 import me.refriz.server.Messages;
 import me.refriz.server.PlayerData;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public enum Rank {
     BUILDER(ChatColor.YELLOW + "[Builder]", ChatColor.YELLOW + "[B]", ChatColor.YELLOW, 1, Types.getBuilder()),
     DONOR2(ChatColor.AQUA + "[Donor 2]", ChatColor.AQUA + "[D2]", ChatColor.WHITE, 1, Types.getDonor2()),
     DONOR(ChatColor.AQUA + "[Donor]", ChatColor.AQUA + "[E]", ChatColor.WHITE, 1, Types.getDonor()),
-    NONE("", null, ChatColor.GRAY, 0, Types.getNone());
+    NONE(ChatColor.AQUA + "[Tester]", null, ChatColor.AQUA, 0, Types.getNone());
 
     private final String prefix;
     private final String shortPrefix;
@@ -96,6 +96,10 @@ public enum Rank {
         }
     }
 
+
+    /*
+    should be init, but just initializes teams
+     */
     public static void deployTeams() {
         mainScoreboard = Inferris.getInstance().getServer().getScoreboardManager().getMainScoreboard();
 
@@ -190,5 +194,17 @@ public enum Rank {
 
         new Tab().removeEntries(player);
         new RankReceiver().receive(player);
+    }
+
+    public static void update(Player player, String rank, int branchID){
+        try{
+            Connection connection = DatabaseConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `ranks` SET `" + rank + "` = " + branchID + " WHERE `uuid` = '" + player.getUniqueId() + "'");
+            preparedStatement.execute();
+
+            refresh(player);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

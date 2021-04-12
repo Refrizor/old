@@ -1,6 +1,6 @@
 package me.refriz.commands;
 
-import me.refriz.events.RankReceiver;
+import me.refriz.ranks.RankReceiver;
 import me.refriz.ranks.Rank;
 import me.refriz.ranks.Tab;
 import me.refriz.server.DatabaseConnector;

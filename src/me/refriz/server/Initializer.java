@@ -5,14 +5,17 @@ import me.refriz.events.ChatEvent;
 import me.refriz.events.JoinEvent;
 import me.refriz.events.QuitEvent;
 import me.refriz.lobby.Lobby;
+import me.refriz.midstforth.Regions;
 import me.refriz.midstforth.engines.EngineMenu;
 import me.refriz.midstforth.quests.Dialogue;
+import me.refriz.minigames.pvp.PVPEvents;
 import me.refriz.ranks.Rank;
+import org.bukkit.WorldCreator;
 import org.bukkit.plugin.PluginManager;
 
 public class Initializer {
 
-    public static void init(){
+    public void init(){
         PluginManager pluginManager = Inferris.getInstance().getServer().getPluginManager();
 
         pluginManager.registerEvents(new JoinEvent(), Inferris.getInstance());
@@ -23,8 +26,20 @@ public class Initializer {
         pluginManager.registerEvents(new EngineMenu(), Inferris.getInstance());
         pluginManager.registerEvents(new Dialogue(), Inferris.getInstance());
 
+        //Midstforth
+        pluginManager.registerEvents(new Regions(), Inferris.getInstance());
+
+        //PVP
+        pluginManager.registerEvents(new PVPEvents(), Inferris.getInstance());
+
         Rank.deployTeams();
 
+        try{
+            WorldCreator worldCreator = new WorldCreator("creations");
+            WorldManager.load(worldCreator);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void disable(){

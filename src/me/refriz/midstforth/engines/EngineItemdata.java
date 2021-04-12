@@ -3,7 +3,9 @@ package me.refriz.midstforth.engines;
 import me.refriz.server.DatabaseConnector;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -12,54 +14,71 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import static me.refriz.midstforth.Midstforth.getEngine;
+
 public class EngineItemdata {
 
-    private static final ItemStack engine3 = new ItemStack(Material.EMERALD_BLOCK);
-    private static final ItemStack engine2 = new ItemStack(Material.GOLD_BLOCK);
-    private static final ItemStack engine1 = new ItemStack(Material.IRON_BLOCK);
+    private final ItemStack engine3 = new ItemStack(Material.EMERALD_BLOCK);
+    private final ItemStack engine2 = new ItemStack(Material.GOLD_BLOCK);
+    private final ItemStack engine1 = new ItemStack(Material.IRON_BLOCK);
 
     private static final String engineMenu = ChatColor.BLACK + "Engine Menu";
     private static final String owned = ChatColor.GREEN + "Owned";
     private static final String purchase = ChatColor.RED + "Cost: ";
 
-    public static ItemStack getEngine3(Player player) {
+    public ItemStack getEngine3(Player player) {
         ItemMeta itemMeta = engine3.getItemMeta();
         itemMeta.setDisplayName(Engines.ENGINE_3.getName());
 
         ArrayList<String> lore = new ArrayList<String>();
-        String loreText = getEngineType(player, 3);
+        String loreText = getEngineText(player, 3);
         lore.add(loreText);
         itemMeta.setLore(lore);
+
+        if(getEngine(player) == 3){
+            itemMeta.addEnchant(Enchantment.MENDING, 1, true);
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
 
         engine3.setItemMeta(itemMeta);
         return engine3;
     }
 
-    public static ItemStack getEngine2(Player player) {
+    public ItemStack getEngine2(Player player) {
         ItemMeta itemMeta = engine2.getItemMeta();
         itemMeta.setDisplayName(Engines.ENGINE_2.getName());
         ArrayList<String> lore = new ArrayList<String>();
-        String loreText = getEngineType(player, 2);
+        String loreText = getEngineText(player, 2);
         lore.add(loreText);
         itemMeta.setLore(lore);
+
+        if(getEngine(player) == 2){
+            itemMeta.addEnchant(Enchantment.MENDING, 1, true);
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
 
         engine2.setItemMeta(itemMeta);
         return engine2;
     }
 
-    public static ItemStack getEngine1(Player player) {
+    public ItemStack getEngine1(Player player) {
         ItemMeta itemMeta = engine1.getItemMeta();
         itemMeta.setDisplayName(Engines.ENGINE_1.getName());
         ArrayList<String> lore = new ArrayList<String>();
-        String loreText = getEngineType(player, 1);
+        String loreText = getEngineText(player, 1);
         lore.add(loreText);
         itemMeta.setLore(lore);
+
+        if(getEngine(player) == 1){
+            itemMeta.addEnchant(Enchantment.MENDING, 1, true);
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
 
         engine1.setItemMeta(itemMeta);
         return engine1;
     }
 
-    public static String getEngineType(Player player, int type){
+    public static String getEngineText(Player player, int type){
         String result = null;
         int engine = 0;
 
@@ -95,7 +114,7 @@ public class EngineItemdata {
                 if(engine >= 1){
                     result = getOwned();
                 }else{
-                    result = getPurchase() + Engines.ENGINE_1.getCost();
+                    result = ChatColor.RED + "You don't own this";
                 }
             }
 

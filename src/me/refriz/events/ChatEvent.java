@@ -15,9 +15,9 @@ public class ChatEvent implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        int donorLevel = PlayerData.getBranchNumber(player, "donor");
-        int staffLevel = PlayerData.getBranchNumber(player, "staff");
-        int builderLevel = PlayerData.getBranchNumber(player, "builder");
+        int donorLevel = PlayerData.getDonorBranchID(player);
+        int staffLevel = PlayerData.getStaffBranchID(player);
+        int builderLevel = PlayerData.getBuilderBranchID(player);
 
         if (!PlayerData.getMuted().contains(player.getName())) {
 
@@ -26,7 +26,7 @@ public class ChatEvent implements Listener {
             }
 
             if (donorLevel == 0 && staffLevel == 0) {
-                event.setFormat(Rank.NONE.getNameColor() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + event.getMessage());
+                event.setFormat(Rank.NONE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + event.getMessage());
             }
 
             if (donorLevel == 0) {

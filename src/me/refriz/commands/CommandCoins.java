@@ -29,20 +29,20 @@ public class CommandCoins implements CommandExecutor {
 
                 if (args[0].equalsIgnoreCase("set")) {
 
-                    Coins.set(player, amount);
+                    Coins.set(target, amount);
 
                     player.sendMessage(ChatColor.GREEN + "Updated balance for " + target.getName());
                 }
 
                 if (args[0].equalsIgnoreCase("add")) {
 
-                    Coins.add(player, amount);
+                    Coins.add(target, amount);
                     player.sendMessage(ChatColor.GREEN + "Updated balance for " + target.getName());
                 }
 
                 if (args[0].equalsIgnoreCase("remove")) {
 
-                    Coins.remove(player, amount);
+                    Coins.remove(target, amount);
 
                     player.sendMessage(ChatColor.GREEN + "Updated balance for " + target.getName());
                 }

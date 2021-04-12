@@ -19,7 +19,7 @@ public class CommandUnban implements CommandExecutor {
             int length = args.length;
 
             if(length == 0){
-
+                player.sendMessage(ChatColor.RED + "Usage: /unban <player>");
             }
             if(length == 1){
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);

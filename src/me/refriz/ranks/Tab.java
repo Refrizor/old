@@ -1,13 +1,17 @@
 package me.refriz.ranks;
 
+import me.refriz.Inferris;
+import me.refriz.server.Messages;
 import me.refriz.server.PlayerData;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 
 import static me.refriz.Inferris.*;
 
 public class Tab {
 
     public void deploy(Player player){
+
 
         if(PlayerData.getDonorBranchID(player) == 0) {
 
@@ -50,6 +54,10 @@ public class Tab {
             if (PlayerData.getStaffBranchID(player) == 0) {
                 donor2Team.addEntry(player.getName());
             }
+        }
+
+        if(PlayerData.getStaffBranchID(player) == 0 && PlayerData.getDonorBranchID(player) == 0){
+            noneTeam.addEntry(player.getName());
         }
     }
 

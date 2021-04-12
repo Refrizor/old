@@ -1,6 +1,8 @@
 package me.refriz.commands;
 
-import me.refriz.zeus.Ban;
+import me.refriz.lobby.mysterybox.Mysterybox;
+import me.refriz.midstforth.quests.Intro;
+import me.refriz.server.WorldManager;
 import me.refriz.midstforth.SpacesuitItemdata;
 import me.refriz.midstforth.npc.NPCs;
 import me.refriz.midstforth.quests.Quest;
@@ -10,12 +12,15 @@ import me.refriz.midstforth.engines.EngineMenu;
 import me.refriz.server.SQLHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 public class CommandAdmin implements CommandExecutor {
     @Override
@@ -27,6 +32,30 @@ public class CommandAdmin implements CommandExecutor {
                 int length = args.length;
 
                 if (length == 1) {
+
+                    if(args[0].equalsIgnoreCase("intro")){
+                        Intro.init(player);
+                    }
+                    if(args[0].equalsIgnoreCase("box")){
+                        new Mysterybox().checkBoxes(player);
+                    }
+                    if(args[0].equalsIgnoreCase("gen")){
+                        WorldManager.create("creations", WorldType.FLAT);
+                    }
+
+                    if(args[0].equalsIgnoreCase("tp")){
+                        player.teleport(new Location(Bukkit.getWorld("creations"), 1, 50, 1));
+                    }
+
+                    if(args[0].equalsIgnoreCase("tpmain")){
+                        player.teleport(new Location(Bukkit.getWorld("world"), 1, 50, 1));
+                    }
+
+                    if(args[0].equalsIgnoreCase("introstop")){
+                        for(PotionEffect potionEffect : player.getActivePotionEffects()){
+                            player.removePotionEffect(potionEffect.getType());
+                        }
+                    }
 
                     if (args[0].equalsIgnoreCase("getrank")) {
 
@@ -64,6 +93,7 @@ public class CommandAdmin implements CommandExecutor {
                     }
                 }
                 if(length == 2){
+
                     if(args[0].equalsIgnoreCase("nukemid")){
                         Player target = Bukkit.getPlayer(args[1]);
 

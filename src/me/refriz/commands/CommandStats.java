@@ -26,7 +26,7 @@ public class CommandStats implements CommandExecutor {
             player.sendMessage("");
             player.sendMessage(ChatColor.GRAY + "Rank: " + Rank.getRankTag(player));
             player.sendMessage("");
-            player.sendMessage(ChatColor.YELLOW + "Engine: " + ChatColor.AQUA + Midstforth.getEngineType(player));
+            player.sendMessage(ChatColor.YELLOW + "Engine: " + ChatColor.AQUA + Midstforth.getEngine(player));
             if (Midstforth.hasPlayed(player)) {
                 player.sendMessage(ChatColor.YELLOW + "Money: " + ChatColor.DARK_GREEN + "$" + Economy.retrieve(player));
                 player.sendMessage("");

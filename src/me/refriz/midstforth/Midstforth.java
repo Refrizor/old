@@ -3,12 +3,17 @@ package me.refriz.midstforth;
 import me.refriz.server.DatabaseConnector;
 import org.bukkit.entity.Player;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class Midstforth {
+
+    //TODO: only insert in played_midstforth after intro sequence completion
+
+    public static void startNewGame(Player player){
+
+    }
 
     public static boolean hasPlayed(Player player) {
         try {
@@ -36,24 +41,23 @@ public class Midstforth {
 
             PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO `locations`(`uuid`, `type`) VALUES ('" + player.getUniqueId() + "', 'PLACEHOLDER')");
             preparedStatement2.execute();
+
+            startNewGame(player);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static Integer getEngineType(Player player) {
+    public static int getEngine(Player player){
         int engine = 0;
-
-        try {
+        try{
             Connection connection = DatabaseConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT type FROM `engines` WHERE `uuid` = '" + player.getUniqueId() + "'");
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
+            if(resultSet.next()){
                 engine = resultSet.getInt(1);
             }
-
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
         return engine;

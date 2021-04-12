@@ -45,3 +45,11 @@ commands:
     description: Warn
   kick:
     description: Kick
+  mid:
+    description: Mid administration
+  pvp:
+    description: PVP
+  whois:
+    description: Whois
+  redeem:
+    description: Redeem

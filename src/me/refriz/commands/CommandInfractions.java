@@ -35,7 +35,7 @@ public class CommandInfractions implements CommandExecutor {
                         player.sendMessage(resultSet.getString(1) + ", reason: " + resultSet.getString(2));
                     }
                 }catch(Exception e){
-
+                    e.printStackTrace();
                 }
             }
         }

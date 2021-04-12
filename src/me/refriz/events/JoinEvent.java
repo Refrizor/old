@@ -1,7 +1,8 @@
 package me.refriz.events;
 
+import me.refriz.ranks.RankReceiver;
 import me.refriz.zeus.Ban;
-import me.refriz.Lobby;
+import me.refriz.lobby.Lobby;
 import me.refriz.Coins;
 import me.refriz.Inferris;
 import me.refriz.midstforth.Midstforth;
@@ -24,7 +25,7 @@ public class JoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        new Lobby().send(player);
+        new Lobby().send(player, true);
 
         if(!Midstforth.hasPlayed(player)){
             Midstforth.insert(player);
@@ -50,6 +51,7 @@ public class JoinEvent implements Listener {
                 player.sendMessage(ChatColor.GREEN + "Welcome!");
 
                 Coins.insert(player);
+                new RankReceiver().receive(player);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,10 +75,10 @@ public class JoinEvent implements Listener {
             if (PlayerData.getStaffBranchID(player) == 2) {
                 event.setJoinMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
             }
-        } else {
 
+        } else {
             /*
-            Donor section
+            Else if they do have a donor rank:
              */
 
             if (PlayerData.getDonorBranchID(player) == 1) {
@@ -96,6 +98,10 @@ public class JoinEvent implements Listener {
             if (PlayerData.getStaffBranchID(player) == 2) {
                 event.setJoinMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
             }
+        }
+
+        if(PlayerData.getStaffBranchID(player) == 0 && PlayerData.getDonorBranchID(player) == 0){
+            event.setJoinMessage(Rank.NONE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
         }
 
         if(!player.isOp()){

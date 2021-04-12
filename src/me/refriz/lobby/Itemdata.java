@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class Itemdata {
 
     private static final ItemStack games = new ItemStack(Material.EMERALD);
-    private static final ItemStack fun = new ItemStack(Material.BLAZE_POWDER);
+    private static final ItemStack cosmetics = new ItemStack(Material.BLAZE_POWDER);
 
     public static ItemStack getGames() {
         ItemMeta itemMeta = games.getItemMeta();
@@ -17,10 +17,10 @@ public class Itemdata {
         return games;
     }
 
-    public static ItemStack getFun() {
-        ItemMeta itemMeta = fun.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.AQUA + "Fun");
-        fun.setItemMeta(itemMeta);
-        return fun;
+    public static ItemStack getCosmetics() {
+        ItemMeta itemMeta = cosmetics.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.AQUA + "Cosmetics");
+        cosmetics.setItemMeta(itemMeta);
+        return cosmetics;
     }
 }

@@ -1,7 +1,7 @@
 package me.refriz;
 
 import me.refriz.commands.*;
-import me.refriz.midstforth.quests.Quests;
+import me.refriz.minigames.pvp.CommandPVP;
 import me.refriz.server.Initializer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,8 +45,12 @@ public class Inferris extends JavaPlugin {
         getCommand("unban").setExecutor(new CommandUnban());
         getCommand("warn").setExecutor(new CommandWarn());
         getCommand("kick").setExecutor(new CommandKick());
+        getCommand("mid").setExecutor(new CommandMid());
+        getCommand("pvp").setExecutor(new CommandPVP());
+        getCommand("whois").setExecutor(new CommandWhois());
+        getCommand("redeem").setExecutor(new CommandRedeem());
 
-        Initializer.init();
+        new Initializer().init();
 
         FileConfiguration config = this.getConfig();
         config.addDefault("database_user", "");
