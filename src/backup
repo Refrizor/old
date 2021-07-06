@@ -1,7 +1,7 @@
 
-import me.refriz.server.PlayerData;
-import me.refriz.ranks.Rank;
-import me.refriz.server.Messages;
+import me.aziah.server.PlayerData;
+import me.aziah.ranks.Rank;
+import me.aziah.server.Messages;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
