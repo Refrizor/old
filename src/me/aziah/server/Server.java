@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 
 public class Server {
     enum Ports{
-        MINIGAMES(25566),
-        MIDSTFORTH(25567);
+        MIDSTFORTH(25566),
+        MINIGAMES(25567);
 
         private final int server;
         Ports(int server){

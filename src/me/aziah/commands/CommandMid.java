@@ -1,5 +1,6 @@
 package me.aziah.commands;
 
+import me.aziah.events.Cinematics;
 import me.aziah.midstforth.Regions;
 import me.aziah.midstforth.quests.list.QuestIntro;
 import me.aziah.server.PlayerData;
@@ -28,6 +29,9 @@ public class CommandMid implements CommandExecutor {
                 }
                 if(args[0].equalsIgnoreCase("stopintro")){
                     Regions.exitApartment(player, true);
+                }
+                if(args[0].equalsIgnoreCase("cinematic")){
+                    new Cinematics().introduction(player);
                 }
             }
         }

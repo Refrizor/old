@@ -20,6 +20,7 @@ public class Inferris extends JavaPlugin {
     public static Team helperTeam;
     public static Team donor2Team;
     public static Team donor1Team;
+    public static Team affiliate;
     public static Team noneTeam;
 
     @Override
@@ -54,13 +55,14 @@ public class Inferris extends JavaPlugin {
         getCommand("npc").setExecutor(new CommandNPC());
         getCommand("questmanager").setExecutor(new CommandQuestManager());
 
-        new Initializer().init();
-
         FileConfiguration config = this.getConfig();
-        config.addDefault("database_user", "");
-        config.addDefault("database_password", "");
+        config.addDefault("database_user", "Here");
+        config.addDefault("database_password", "Here");
+
         config.options().copyDefaults(true);
         saveConfig();
+
+        new Initializer().init();
     }
 
     @Override

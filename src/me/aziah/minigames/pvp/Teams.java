@@ -1,14 +1,13 @@
 package me.aziah.minigames.pvp;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 
 public class Teams {
 
-    // Init the Map that stores all the players and
-    // in which team they're in
     private static final Map<UUID, Team> teams = new HashMap<>();
 
     // The function which takes in a List of players and stores
@@ -57,28 +56,18 @@ public class Teams {
         teams.put(player.getUniqueId(), team);
     }
 
-    // Function to fetch the current team of a player,
-    // returns null if the player isn't in any team
     public static Team getTeamOfPlayer(Player player) {
-
-        // Check if player is in a team
         if(isPlayerInTeam(player)) {
-            // Return the player's team
+
             return teams.get(player.getUniqueId());
         }
         return null;
 
     }
 
-    // A function to add a player to a team. Returns a boolean,
-    // to tell if it was successful or not
     public static boolean removePlayerFromTeam(Player player) {
-
-        // Check if player is in a team
         if(isPlayerInTeam(player)) {
             teams.remove(player.getUniqueId());
-
-            // Add a message, optionally
         }
 
         return false;
@@ -89,8 +78,6 @@ public class Teams {
         return teams.containsKey(player.getUniqueId());
     }
 
-    // This function just gets all the players inside
-    // a certain team
     public static List<Player> getPlayersInTeam(Team team) {
 
         List<Player> players = new ArrayList<>();
@@ -115,14 +102,10 @@ public class Teams {
 
     }
 
-    // Just the enum for handling the teams
-    // The display name for the team is also
-    // stored inside this enum. But that's up to
-    // you to use them
     public enum Team {
 
-        RED("§c§lRED"),
-        BLUE("§9§lBLUE");
+        RED(ChatColor.RED + "Red"),
+        BLUE(ChatColor.BLUE + "Blue");
 
         String displayName;
         Team(String displayName) {

@@ -36,7 +36,6 @@ public class JoinEvent implements Listener {
             PlayerData.getMuted().add(player.getName());
         }
 
-
         try {
             Connection connection = DatabaseHandler.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ranks WHERE uuid = '" + player.getUniqueId() + "'");
@@ -47,7 +46,7 @@ public class JoinEvent implements Listener {
                 new RankReceiver().receive(player);
 
             } else {
-                PreparedStatement insert = connection.prepareStatement("INSERT INTO `ranks`(`uuid`, `donor`, `staff`, `builder`) VALUES ('" + player.getUniqueId() + "', 0, 0, 0)");
+                PreparedStatement insert = connection.prepareStatement("INSERT INTO `ranks`(`uuid`, `donor`, `staff`, `builder`, `affiliate`) VALUES ('" + player.getUniqueId() + "', 0, 0, 0, 0)");
                 insert.execute();
                 player.sendMessage(ChatColor.GREEN + "Welcome!");
 
@@ -60,9 +59,12 @@ public class JoinEvent implements Listener {
 
         Ban.checkBan(player);
         joinMessage(player, event);
+        midstforthCache(player);
+
+
     }
 
-    public static void joinMessage(Player player, PlayerJoinEvent event) {
+    private static void joinMessage(Player player, PlayerJoinEvent event) {
 
         if (PlayerData.getStaffBranchID(player) == 3) {
             event.setJoinMessage(Rank.ADMIN.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
@@ -112,11 +114,14 @@ public class JoinEvent implements Listener {
                 }
             }
         }
+    }
 
+    private static void midstforthCache(Player player){
         try{
             Connection connection = DatabaseHandler.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT discover_lab, lab_power FROM `progression_states` WHERE `uuid` = '" + player.getUniqueId() + "'");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            PreparedStatement progression = connection.prepareStatement("SELECT discover_lab, lab_power FROM `progression_states` WHERE `uuid` = '" + player.getUniqueId() + "'");
+            PreparedStatement location = connection.prepareStatement("SELECT name FROM locations WHERE uuid = '" + player.getUniqueId() + "'");
+            ResultSet resultSet = progression.executeQuery();
             int discoverLab = 0;
             int labPower = 0;
             if(resultSet.next()){
@@ -128,6 +133,12 @@ public class JoinEvent implements Listener {
             }
             if(labPower == 1){
                 States.getPowerLab().add(player.getName());
+            }
+
+            ResultSet resultSet1 = location.executeQuery();
+            if(resultSet1.next()){
+                String locationStr = resultSet1.getString(1);
+                PlayerData.getLocation().put(player.getUniqueId(), locationStr);
             }
         }catch(Exception e){
             e.printStackTrace();

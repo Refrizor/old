@@ -56,6 +56,7 @@ public class Initializer {
         Inferris.helperTeam.unregister();
         Inferris.donor2Team.unregister();
         Inferris.donor1Team.unregister();
+        Inferris.affiliate.unregister();
         Inferris.noneTeam.unregister();
     }
 }

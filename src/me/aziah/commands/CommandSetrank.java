@@ -45,14 +45,6 @@ public class CommandSetrank implements CommandExecutor {
                         PlayerData.getStaffBranch().remove(target.getName());
                         PlayerData.getBuilderBranch().remove(target.getName());
 
-                        Rank.ADMIN.getRank().remove(target);
-                        Rank.MOD.getRank().remove(target);
-                        Rank.HELPER.getRank().remove(target);
-                        Rank.BUILDER.getRank().remove(target);
-                        Rank.DONOR2.getRank().remove(target);
-                        Rank.DONOR.getRank().remove(target);
-                        Rank.NONE.getRank().remove(target);
-
                         new Tab().removeEntries(target);
                         new RankReceiver().receive(target);
 

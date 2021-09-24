@@ -5,6 +5,7 @@ import me.aziah.server.DatabaseHandler;
 import me.aziah.server.Messages;
 import me.aziah.server.PlayerData;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -15,26 +16,25 @@ import java.util.List;
 import static me.aziah.Inferris.*;
 
 public enum Rank {
-    ADMIN(ChatColor.RED + "[Admin]", null, ChatColor.RED, 3, Types.getAdmin()),
-    MOD(ChatColor.DARK_GREEN + "[Mod]", null, ChatColor.DARK_GREEN, 2, Types.getMod()),
-    HELPER(ChatColor.BLUE + "[Helper]", null, ChatColor.BLUE, 1, Types.getHelper()),
-    BUILDER(ChatColor.YELLOW + "[Builder]", ChatColor.YELLOW + "[B]", ChatColor.YELLOW, 1, Types.getBuilder()),
-    DONOR2(ChatColor.AQUA + "[Donor 2]", ChatColor.AQUA + "[D2]", ChatColor.WHITE, 1, Types.getDonor2()),
-    DONOR(ChatColor.AQUA + "[Donor]", ChatColor.AQUA + "[E]", ChatColor.WHITE, 1, Types.getDonor()),
-    NONE(ChatColor.AQUA + "[Tester]", null, ChatColor.AQUA, 0, Types.getNone());
+    ADMIN(ChatColor.RED + "[Admin]", null, ChatColor.RED, 3),
+    MOD(ChatColor.DARK_GREEN + "[Mod]", null, ChatColor.DARK_GREEN, 2),
+    HELPER(ChatColor.BLUE + "[Helper]", null, ChatColor.BLUE, 1),
+    BUILDER(ChatColor.YELLOW + "[Builder]", ChatColor.YELLOW + "[B]", ChatColor.YELLOW, 1),
+    DONOR2(ChatColor.AQUA + "[Donor 2]", ChatColor.AQUA + "[D2]", ChatColor.WHITE, 2),
+    DONOR(ChatColor.AQUA + "[Donor]", ChatColor.AQUA + "[E]", ChatColor.WHITE, 1),
+    AFFILIATE(ChatColor.GREEN + "[Affiliate]", ChatColor.GREEN + "[A]", ChatColor.WHITE, 1),
+    NONE(ChatColor.AQUA + "[Tester]", null, ChatColor.AQUA, 0);
 
     private final String prefix;
     private final String shortPrefix;
     private final ChatColor nameColor;
     private final int branchID;
-    private final List<Player> rank;
 
-    Rank(String prefix, String shortPrefix, ChatColor nameColor, int branchID, List<Player> rank) {
+    Rank(String prefix, String shortPrefix, ChatColor nameColor, int branchID) {
         this.prefix = prefix;
         this.shortPrefix = shortPrefix;
         this.nameColor = nameColor;
         this.branchID = branchID;
-        this.rank = rank;
     }
 
     public String getPrefix() {
@@ -53,48 +53,6 @@ public enum Rank {
         return branchID;
     }
 
-    public List<Player> getRank() {
-        return rank;
-    }
-
-    public static class Types {
-        private static final List<Player> admin = new ArrayList<>();
-        private static final List<Player> mod = new ArrayList<>();
-        private static final List<Player> helper = new ArrayList<>();
-        private static final List<Player> builder = new ArrayList<>();
-        private static final List<Player> donor2 = new ArrayList<>();
-        private static final List<Player> donor = new ArrayList<>();
-        private static final List<Player> none = new ArrayList<>();
-
-        public static List<Player> getAdmin() {
-            return admin;
-        }
-
-        public static List<Player> getMod() {
-            return mod;
-        }
-
-        public static List<Player> getHelper() {
-            return helper;
-        }
-
-        public static List<Player> getBuilder() {
-            return builder;
-        }
-
-        public static List<Player> getDonor2() {
-            return donor2;
-        }
-
-        public static List<Player> getDonor() {
-            return donor;
-        }
-
-        public static List<Player> getNone() {
-            return none;
-        }
-    }
-
 
     /*
     should be init, but just initializes teams
@@ -105,13 +63,15 @@ public enum Rank {
         adminTeam = mainScoreboard.registerNewTeam("1-Admin");
         modTeam = mainScoreboard.registerNewTeam("2-Moderator");
         helperTeam = mainScoreboard.registerNewTeam("3-Helper");
-        donor2Team = mainScoreboard.registerNewTeam("4-Donor2");
-        donor1Team = mainScoreboard.registerNewTeam("5-Donor1");
+        affiliate = mainScoreboard.registerNewTeam("4-Affiliate");
+        donor2Team = mainScoreboard.registerNewTeam("5-Donor2");
+        donor1Team = mainScoreboard.registerNewTeam("6-Donor1");
         noneTeam = mainScoreboard.registerNewTeam("9-None");
 
         adminTeam.setPrefix(ADMIN.getPrefix() + Messages.SPACER.getMessage());
         modTeam.setPrefix(MOD.getPrefix() + Messages.SPACER.getMessage() + MOD.getNameColor());
         helperTeam.setPrefix(HELPER.getPrefix() + Messages.SPACER.getMessage());
+        affiliate.setPrefix(AFFILIATE.getPrefix() + Messages.SPACER.getMessage());
         donor2Team.setPrefix(DONOR2.getPrefix() + Messages.SPACER.getMessage());
         donor1Team.setPrefix(DONOR.getPrefix() + Messages.SPACER.getMessage());
         noneTeam.setPrefix(NONE.getPrefix() + Messages.SPACER.getMessage());
@@ -119,12 +79,13 @@ public enum Rank {
         adminTeam.setColor(ADMIN.getNameColor());
         modTeam.setColor(MOD.getNameColor());
         helperTeam.setColor(HELPER.getNameColor());
+        affiliate.setColor(AFFILIATE.getNameColor());
         donor2Team.setColor(DONOR2.getNameColor());
         donor1Team.setColor(DONOR.getNameColor());
         noneTeam.setColor(NONE.getNameColor());
     }
 
-    public static String getRankTag(Player player) {
+    public static String getRankTag(OfflinePlayer player) {
 
         String prefix = null;
 
@@ -182,14 +143,7 @@ public enum Rank {
         PlayerData.getDonorBranch().remove(player.getName());
         PlayerData.getStaffBranch().remove(player.getName());
         PlayerData.getBuilderBranch().remove(player.getName());
-
-        Rank.ADMIN.getRank().remove(player);
-        Rank.MOD.getRank().remove(player);
-        Rank.HELPER.getRank().remove(player);
-        Rank.BUILDER.getRank().remove(player);
-        Rank.DONOR2.getRank().remove(player);
-        Rank.DONOR.getRank().remove(player);
-        Rank.NONE.getRank().remove(player);
+        PlayerData.getAffiliateBranch().remove(player.getName());
 
         new Tab().removeEntries(player);
         new RankReceiver().receive(player);

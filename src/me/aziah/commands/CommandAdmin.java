@@ -42,7 +42,7 @@ public class CommandAdmin implements CommandExecutor {
                         new Mysterybox().checkBoxes(player);
                     }
                     if(args[0].equalsIgnoreCase("gen")){
-                        WorldManager.create("creations", WorldType.FLAT);
+                        WorldManager.create("minigames", WorldType.FLAT);
                     }
 
                     if(args[0].equalsIgnoreCase("tp")){
@@ -84,6 +84,10 @@ public class CommandAdmin implements CommandExecutor {
                     }
                 }
                 if(length == 2){
+
+                    if(args[0].equalsIgnoreCase("tp")){
+                        player.teleport(new Location(Bukkit.getWorld(args[1]), 1, 50, 1));
+                    }
 
                     if(args[0].equalsIgnoreCase("nukemid")){
                         Player target = Bukkit.getPlayer(args[1]);

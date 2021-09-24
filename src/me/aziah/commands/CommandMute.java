@@ -28,7 +28,7 @@ public class CommandMute implements CommandExecutor {
 
                     String message = "";
                     for (int i = 1; i < args.length; i++) {
-                        message = message + args[i] + " ";
+                        message = message + args[i];
                     }
 
                     Mute.mute(player, message, target);

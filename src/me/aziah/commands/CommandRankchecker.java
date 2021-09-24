@@ -12,13 +12,6 @@ public class CommandRankchecker implements CommandExecutor {
         Player player = (Player) sender;
 
         if (player.hasPermission("test1")) {
-            player.sendMessage(Rank.ADMIN.getRank().size() + "");
-            player.sendMessage(Rank.MOD.getRank().size() + "");
-            player.sendMessage(Rank.HELPER.getRank().size() + "");
-            player.sendMessage("");
-            player.sendMessage(Rank.DONOR.getRank().size() + "");
-            player.sendMessage("");
-            player.sendMessage(Rank.NONE.getRank().size() + "");
         }else{
             player.sendMessage("No permission.");
         }

@@ -1,5 +1,6 @@
 package me.aziah.server;
 
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -37,8 +38,10 @@ public class PlayerUtils {
 
     public static void reset(Player player){
         removePotions(player);
-        player.setHealth(10);
+        player.setHealth(20);
         player.setFoodLevel(20);
+        player.setAllowFlight(false);
+        player.setGameMode(GameMode.ADVENTURE);
     }
 
     //int fadeIn, int stay, int fadeOut

@@ -36,10 +36,14 @@ public class CommandWhois implements CommandExecutor {
 
                 if(resultSet.next()){
 
-                    player.sendMessage(ChatColor.AQUA + "About " + player.getName());
+                    player.sendMessage(ChatColor.AQUA + "About " + offlinePlayer.getName());
                     player.sendMessage("");
-                    player.sendMessage(ChatColor.WHITE + "Rank: " + Rank.getRankTag((Player) offlinePlayer));
-                    player.sendMessage(ChatColor.GRAY + "Whois message: " + ChatColor.translateAlternateColorCodes('&', resultSet.getString(1)));
+                    player.sendMessage(ChatColor.WHITE + "Rank: " + Rank.getRankTag(offlinePlayer));
+                    player.sendMessage(ChatColor.GRAY + "Whois message: " + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', resultSet.getString(1)));
+                }else{
+                    player.sendMessage(ChatColor.AQUA + "About " + offlinePlayer.getName());
+                    player.sendMessage("");
+                    player.sendMessage(ChatColor.WHITE + "Rank: " + Rank.getRankTag(offlinePlayer));
                 }
             }catch(Exception e){
                 e.printStackTrace();

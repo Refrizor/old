@@ -13,44 +13,24 @@ public class RankReceiver {
     int donor;
     int staff;
     int builder;
+    int affiliate;
 
     public void receive(Player player){
 
         try{
             Connection connection = DatabaseHandler.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT donor,staff,builder FROM ranks WHERE uuid = '" + player.getUniqueId() + "'");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT donor,staff,builder,affiliate FROM ranks WHERE uuid = '" + player.getUniqueId() + "'");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
                 donor = resultSet.getInt(1);
                 staff = resultSet.getInt(2);
                 builder = resultSet.getInt(3);
+                affiliate = resultSet.getInt(4);
             }
 
         }catch(Exception e){
             e.printStackTrace();
-        }
-
-        if(staff == 1){
-            Rank.HELPER.getRank().add(player);
-        }
-        if(staff == 2){
-            Rank.MOD.getRank().add(player);
-        }
-        if(staff == 3){
-            Rank.ADMIN.getRank().add(player);
-        }
-
-        if(donor == 1){
-            Rank.DONOR.getRank().add(player);
-        }
-
-        if(builder == 1){
-            Rank.BUILDER.getRank().add(player);
-        }
-
-        if(staff == 0 && donor == 0){
-            Rank.NONE.getRank().add(player);
         }
 
         /*
@@ -62,6 +42,7 @@ public class RankReceiver {
         PlayerData.getDonorBranch().put(player.getName(), donor);
         PlayerData.getStaffBranch().put(player.getName(), staff);
         PlayerData.getBuilderBranch().put(player.getName(), builder);
+        PlayerData.getAffiliateBranch().put(player.getName(), affiliate);
 
         new Permission().deployPermissions(player);
         new Tab().deploy(player);

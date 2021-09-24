@@ -1,5 +1,6 @@
 package me.aziah.midstforth;
 
+import me.aziah.events.Cinematics;
 import me.aziah.midstforth.quests.list.QuestIntro;
 import me.aziah.server.DatabaseHandler;
 import org.bukkit.entity.Player;
@@ -13,7 +14,7 @@ public class Midstforth {
     //TODO: only insert in played_midstforth after intro sequence completion
 
     public static void startNewGame(Player player){
-        new Cinematic().intro(player);
+        new Cinematics().introduction(player);
     }
 
     public static boolean hasPlayed(Player player) {

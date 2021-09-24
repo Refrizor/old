@@ -1,7 +1,6 @@
 package me.aziah.events;
 
 import me.aziah.midstforth.States;
-import me.aziah.minigames.pvp.PVPGame;
 import me.aziah.ranks.Rank;
 import me.aziah.server.Messages;
 import me.aziah.server.PlayerData;
@@ -21,29 +20,22 @@ public class QuitEvent implements Listener {
 
         States.getDiscoveredLab().remove(player.getName());
         States.getPowerLab().remove(player.getName());
+        States.getApartment().remove(player.getName());
 
         PlayerStates.getLobby().remove(player.getName());
-
-        Rank.ADMIN.getRank().remove(player);
-        Rank.MOD.getRank().remove(player);
-        Rank.HELPER.getRank().remove(player);
-        Rank.DONOR.getRank().remove(player);
-        Rank.NONE.getRank().remove(player);
+        PlayerStates.getVanish().remove(player.getName());
 
         PlayerData.getStaffBranch().remove(player.getName());
         PlayerData.getDonorBranch().remove(player.getName());
         PlayerData.getBuilderBranch().remove(player.getName());
+        PlayerData.getAffiliateBranch().remove(player.getName());
 
-        PlayerStates.getVanish().remove(player.getName());
-        States.getApartment().remove(player.getName());
-        PVPGame.getQueue().remove(player.getName());
-        PVPGame.getIngame().remove(player);
-        PVPGame.getGracePeriod().remove(player.getName());
 
         PlayerData.getMuted().remove(player.getName());
+        PlayerData.getLocation().remove(player.getUniqueId());
     }
 
-    public static void quitMessage(Player player, PlayerQuitEvent event) {
+    private static void quitMessage(Player player, PlayerQuitEvent event) {
 
         if (PlayerData.getStaffBranchID(player) == 3) {
             event.setQuitMessage(Rank.ADMIN.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");

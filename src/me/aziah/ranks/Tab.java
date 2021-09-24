@@ -56,6 +56,11 @@ public class Tab {
         if(PlayerData.getStaffBranchID(player) == 0 && PlayerData.getDonorBranchID(player) == 0){
             noneTeam.addEntry(player.getName());
         }
+
+        /*Special*/
+        if(PlayerData.getAffiliateBranchID(player) == 1){
+            affiliate.addEntry(player.getName());
+        }
     }
 
     public void removeEntries(Player player){
@@ -64,6 +69,7 @@ public class Tab {
         helperTeam.removeEntry(player.getName());
         donor2Team.removeEntry(player.getName());
         donor1Team.removeEntry(player.getName());
+        affiliate.removeEntry(player.getName());
         noneTeam.removeEntry(player.getName());
     }
 }
