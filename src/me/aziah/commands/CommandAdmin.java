@@ -99,6 +99,10 @@ public class CommandAdmin implements CommandExecutor {
                         SQLHandler.action("DELETE FROM `active_quests` WHERE `uuid` = '" + target.getUniqueId() + "'");
                         SQLHandler.action("DELETE FROM `completed_quests` WHERE `uuid` = '" + target.getUniqueId() + "'");
                         SQLHandler.action("DELETE FROM `engines` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `progression_states` WHERE `uuid` = '" + target.getUniqueId() + "'");
+                        SQLHandler.action("DELETE FROM `ranks` WHERE `uuid` = '" + target.getUniqueId() + "'");
+
+
 
                         player.sendMessage(ChatColor.GREEN + "Operation successful");
                         target.kickPlayer(ChatColor.GREEN + "Data reset");

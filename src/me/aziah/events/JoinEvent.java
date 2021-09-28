@@ -59,7 +59,7 @@ public class JoinEvent implements Listener {
 
         Ban.checkBan(player);
         joinMessage(player, event);
-        midstforthCache(player);
+        Midstforth.cache(player);
 
 
     }
@@ -113,35 +113,6 @@ public class JoinEvent implements Listener {
                     player.hidePlayer(Inferris.getInstance(), all);
                 }
             }
-        }
-    }
-
-    private static void midstforthCache(Player player){
-        try{
-            Connection connection = DatabaseHandler.getConnection();
-            PreparedStatement progression = connection.prepareStatement("SELECT discover_lab, lab_power FROM `progression_states` WHERE `uuid` = '" + player.getUniqueId() + "'");
-            PreparedStatement location = connection.prepareStatement("SELECT name FROM locations WHERE uuid = '" + player.getUniqueId() + "'");
-            ResultSet resultSet = progression.executeQuery();
-            int discoverLab = 0;
-            int labPower = 0;
-            if(resultSet.next()){
-                discoverLab = resultSet.getInt(1);
-                labPower = resultSet.getInt(2);
-            }
-            if(discoverLab == 1){
-                States.getDiscoveredLab().add(player.getName());
-            }
-            if(labPower == 1){
-                States.getPowerLab().add(player.getName());
-            }
-
-            ResultSet resultSet1 = location.executeQuery();
-            if(resultSet1.next()){
-                String locationStr = resultSet1.getString(1);
-                PlayerData.getLocation().put(player.getUniqueId(), locationStr);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
         }
     }
 }

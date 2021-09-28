@@ -1,18 +1,21 @@
 package me.aziah.midstforth;
 
 import me.aziah.server.DatabaseHandler;
+import me.aziah.server.SQLHandler;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class States {
 
-    private static List<String> discoveredLab = new ArrayList<>();
-    private static List<String> powerLab = new ArrayList<>();
+    private static HashMap<UUID, Boolean> discoveredLab = new HashMap<>();
+    private static HashMap<UUID, Boolean> powerLab = new HashMap<>();
 
     private static final List<String> apartment = new ArrayList<>();
 
@@ -20,12 +23,17 @@ public class States {
         return apartment;
     }
 
-    public static List<String> getDiscoveredLab() {
+    public static HashMap<UUID, Boolean> getDiscoveredLab() {
         return discoveredLab;
     }
 
-    public static List<String> getPowerLab() {
+    public static HashMap<UUID, Boolean> getPowerLab() {
         return powerLab;
+    }
+
+    public static void setState(Player player, String name, int state){
+        String set = "`" + name + "`";
+        SQLHandler.action("UPDATE `progression_states` SET " + set + "= " + state + " WHERE `uuid` = '" + player.getUniqueId() + "'");
     }
 
     public static boolean hasDiscoveredLab(Player player){

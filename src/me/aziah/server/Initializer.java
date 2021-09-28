@@ -1,6 +1,7 @@
 package me.aziah.server;
 
 import me.aziah.Inferris;
+import me.aziah.commands.CommandMid;
 import me.aziah.commands.CommandStickcoord;
 import me.aziah.events.ChatEvent;
 import me.aziah.events.JoinEvent;
@@ -38,6 +39,7 @@ public class Initializer {
         pluginManager.registerEvents(new Regions(), Inferris.getInstance());
         pluginManager.registerEvents(new Accelerator(), Inferris.getInstance());
         pluginManager.registerEvents(new QuestIntro(), Inferris.getInstance());
+        pluginManager.registerEvents(new CommandMid(), Inferris.getInstance());
 
         //PVP
         pluginManager.registerEvents(new PVPEvents(), Inferris.getInstance());

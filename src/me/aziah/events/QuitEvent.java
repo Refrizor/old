@@ -18,8 +18,8 @@ public class QuitEvent implements Listener {
 
         quitMessage(player, event);
 
-        States.getDiscoveredLab().remove(player.getName());
-        States.getPowerLab().remove(player.getName());
+        States.getDiscoveredLab().remove(player.getUniqueId());
+        States.getPowerLab().remove(player.getUniqueId());
         States.getApartment().remove(player.getName());
 
         PlayerStates.getLobby().remove(player.getName());

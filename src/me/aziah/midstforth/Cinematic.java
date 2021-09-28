@@ -12,6 +12,9 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 public class Cinematic {
 
+    private BukkitScheduler scheduler = Bukkit.getScheduler();
+    private int id;
+
     public void intro(Player player) {
         player.teleport(new Location(Bukkit.getWorld("world"), 1.513, 4, 1.366));
         PlayerUtils.addPotion(player, PotionEffectType.BLINDNESS, 99999, 1, true, false);
@@ -19,7 +22,6 @@ public class Cinematic {
         PlayerUtils.sendTitle(player, ChatColor.AQUA + "MIDSTFORTH", ChatColor.WHITE + "A Space RPG...");
         //PlayerUtils.playSound(player, Sound.MUSIC_CREDITS, 0.6F);
 
-        BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(Inferris.getInstance(), new Runnable() {
             @Override
             public void run() {

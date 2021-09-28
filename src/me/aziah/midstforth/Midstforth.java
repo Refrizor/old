@@ -3,6 +3,7 @@ package me.aziah.midstforth;
 import me.aziah.events.Cinematics;
 import me.aziah.midstforth.quests.list.QuestIntro;
 import me.aziah.server.DatabaseHandler;
+import me.aziah.server.PlayerData;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -41,7 +42,7 @@ public class Midstforth {
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO `midstforth_economy`(`uuid`, `amount`) VALUES ('" + player.getUniqueId() + "', 0)");
             preparedStatement1.execute();
 
-            PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO `locations`(`uuid`, `type`) VALUES ('" + player.getUniqueId() + "', 'PLACEHOLDER')");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO `locations`(`uuid`, `name`) VALUES ('" + player.getUniqueId() + "', 'Placeholder')");
             preparedStatement2.execute();
 
             PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO `progression_states`(`uuid`, `discover_lab`, `lab_power`) VALUES ('" + player.getUniqueId() + "', 0, 0)");
@@ -90,6 +91,40 @@ public class Midstforth {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `locations` SET `type`= '" + location + "' WHERE `uuid` = '" + player.getUniqueId() + "'");
             preparedStatement.execute();
             player.sendMessage("Now entering " + location);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void cache(Player player){
+        try{
+            Connection connection = DatabaseHandler.getConnection();
+            PreparedStatement progression = connection.prepareStatement("SELECT discover_lab, lab_power FROM `progression_states` WHERE `uuid` = '" + player.getUniqueId() + "'");
+            PreparedStatement location = connection.prepareStatement("SELECT name FROM locations WHERE uuid = '" + player.getUniqueId() + "'");
+            ResultSet resultSet = progression.executeQuery();
+            int discoverLab = 0;
+            int labPower = 0;
+            if(resultSet.next()){
+                discoverLab = resultSet.getInt(1);
+                labPower = resultSet.getInt(2);
+            }
+            if(discoverLab == 1){
+                States.getDiscoveredLab().put(player.getUniqueId(), true);
+            }else{
+                States.getDiscoveredLab().put(player.getUniqueId(), false);
+            }
+
+            if(labPower == 1) {
+                States.getPowerLab().put(player.getUniqueId(), true);
+            }else {
+                States.getPowerLab().put(player.getUniqueId(), false);
+            }
+
+            ResultSet resultSet1 = location.executeQuery();
+            if(resultSet1.next()){
+                String locationStr = resultSet1.getString(1);
+                PlayerData.getLocation().put(player.getUniqueId(), locationStr);
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
