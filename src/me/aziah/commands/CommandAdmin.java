@@ -36,7 +36,7 @@ public class CommandAdmin implements CommandExecutor {
                 if (length == 1) {
 
                     if(args[0].equalsIgnoreCase("intro")){
-                        QuestIntro.deploy(player);
+                        new QuestIntro().deploy(player);
                     }
                     if(args[0].equalsIgnoreCase("box")){
                         new Mysterybox().checkBoxes(player);

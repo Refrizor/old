@@ -40,12 +40,16 @@ public class CommandQuest implements CommandExecutor {
             }
         }
 
-        if(length == 2){
+        if(length >= 2){
+            String questName = "";
+            for (int i = 1; i < args.length; i++) {
+                questName = questName + args[i] + " ";
+            }
             if(args[0].equalsIgnoreCase("assign")){
-                Quest.assignQuest(player, args[1], true);
+                Quest.assignQuest(player, questName, true);
             }
             if(args[0].equalsIgnoreCase("remove")){
-                Quest.unassignQuest(player, args[1]);
+                Quest.unassignQuest(player, questName);
             }
         }
         return true;

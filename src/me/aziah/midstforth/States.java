@@ -16,7 +16,9 @@ public class States {
 
     private static HashMap<UUID, Boolean> discoveredLab = new HashMap<>();
     private static HashMap<UUID, Boolean> powerLab = new HashMap<>();
+    private static HashMap<UUID, String> discoveries = new HashMap<>();
 
+    private static final List<UUID> satellite1 = new ArrayList<>();
     private static final List<String> apartment = new ArrayList<>();
 
     public static List<String> getApartment() {
@@ -29,6 +31,14 @@ public class States {
 
     public static HashMap<UUID, Boolean> getPowerLab() {
         return powerLab;
+    }
+
+    public static HashMap<UUID, String> getDiscoveries() {
+        return discoveries;
+    }
+
+    public static List<UUID> getSatellite1() {
+        return satellite1;
     }
 
     public static void setState(Player player, String name, int state){

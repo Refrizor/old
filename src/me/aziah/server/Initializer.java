@@ -4,19 +4,20 @@ import me.aziah.Inferris;
 import me.aziah.commands.CommandMid;
 import me.aziah.commands.CommandStickcoord;
 import me.aziah.events.ChatEvent;
+import me.aziah.events.Cinematics;
 import me.aziah.events.JoinEvent;
 import me.aziah.events.QuitEvent;
 import me.aziah.lobby.Lobby;
-import me.aziah.midstforth.LabEvents;
+import me.aziah.midstforth.events.areas.LabEvents;
+import me.aziah.midstforth.events.LookEvent;
 import me.aziah.midstforth.Regions;
-import me.aziah.midstforth.WalkEvent;
+import me.aziah.midstforth.events.WalkEvent;
 import me.aziah.midstforth.engines.EngineMenu;
 import me.aziah.midstforth.menus.Accelerator;
 import me.aziah.midstforth.npc.NPCEvents;
 import me.aziah.midstforth.quests.list.QuestIntro;
 import me.aziah.minigames.pvp.PVPEvents;
 import me.aziah.ranks.Rank;
-import org.bukkit.WorldCreator;
 import org.bukkit.plugin.PluginManager;
 
 public class Initializer {
@@ -40,6 +41,8 @@ public class Initializer {
         pluginManager.registerEvents(new Accelerator(), Inferris.getInstance());
         pluginManager.registerEvents(new QuestIntro(), Inferris.getInstance());
         pluginManager.registerEvents(new CommandMid(), Inferris.getInstance());
+        pluginManager.registerEvents(new LookEvent(), Inferris.getInstance());
+        pluginManager.registerEvents(new Cinematics(), Inferris.getInstance());
 
         //PVP
         pluginManager.registerEvents(new PVPEvents(), Inferris.getInstance());

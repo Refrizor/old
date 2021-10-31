@@ -188,4 +188,23 @@ public class Quest {
         }
         return false;
     }
+
+    public static boolean questOnRecord(Player player, Object quest){
+        try {
+            Connection connection = DatabaseHandler.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quests WHERE `uuid` = '" + player.getUniqueId() + "' AND `name` = '" + quest + "'");
+            PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT * FROM active_quests WHERE `uuid` = '" + player.getUniqueId() + "' AND `name` = '" + quest + "'");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                ResultSet resultSet1 = preparedStatement1.executeQuery();
+                if(resultSet1.next()){
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

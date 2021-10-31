@@ -3,26 +3,24 @@ package me.aziah.commands;
 import me.aziah.Inferris;
 import me.aziah.events.Cinematics;
 import me.aziah.midstforth.Regions;
+import me.aziah.midstforth.States;
+import me.aziah.midstforth.events.areas.Lab_A;
 import me.aziah.midstforth.quests.list.QuestIntro;
-import me.aziah.server.PlayerData;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import net.minecraft.server.v1_16_R3.*;
+import org.bukkit.*;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.util.BoundingBox;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class CommandMid implements CommandExecutor, Listener {
@@ -40,7 +38,7 @@ public class CommandMid implements CommandExecutor, Listener {
                 Regions.enterApartment(player, true);
             }
             if (args[0].equalsIgnoreCase("intro")) {
-                QuestIntro.deploy(player);
+                new QuestIntro().deploy(player);
             }
             if (args[0].equalsIgnoreCase("stopintro")) {
                 Regions.exitApartment(player, true);
@@ -48,7 +46,7 @@ public class CommandMid implements CommandExecutor, Listener {
             if (args[0].equalsIgnoreCase("cinematic")) {
                 new Cinematics().introduction(player);
             }
-            if(args[0].equalsIgnoreCase("test")){
+            if(args[0].equalsIgnoreCase("search")){
 
                 World world = Bukkit.getWorld("world");
                 Location location = new Location(world, 531, 66, -812);
@@ -60,9 +58,20 @@ public class CommandMid implements CommandExecutor, Listener {
 
                     if(entity instanceof Player){
                         player.sendMessage("Yep!");
-
                     }
                 }
+            }
+
+            if(args[0].equalsIgnoreCase("discoveries")){
+                if(States.getDiscoveries().containsKey(player.getUniqueId())){
+                    if(States.getDiscoveries().containsValue("satellite1")){
+                        player.sendMessage(ChatColor.GREEN + "Success");
+                    }
+                }
+            }
+
+            if(args[0].equalsIgnoreCase("bob")){
+                        player.sendMessage(States.getDiscoveries().size() + "");
             }
 
             if(args[0].equalsIgnoreCase("reset")){
@@ -74,11 +83,31 @@ public class CommandMid implements CommandExecutor, Listener {
                 player.resetPlayerWeather();
                 Cinematics.getInCinematic().remove(player.getUniqueId());
             }
+
+            if(args[0].equalsIgnoreCase("tempdiscover")){
+                Lab_A.getTemporaryDiscover().add(player.getName());
+            }
+
+            if(args[0].equalsIgnoreCase("test")){
+                CraftPlayer craftPlayer = (CraftPlayer) player;
+                CraftServer craftServer = (CraftServer) Inferris.getInstance().getServer();
+                EntityArmorStand armorStand = new EntityArmorStand(craftPlayer.getHandle().getWorld(), -122, 33, -240);
+                PacketPlayOutSpawnEntityLiving entity = new PacketPlayOutSpawnEntityLiving(armorStand);
+
+                try{
+                    Field field = entity.getClass().getField("a");
+                    field.setAccessible(true);
+                    field.setInt(entity, 22);
+                    field.setAccessible(false);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                craftPlayer.getHandle().playerConnection.sendPacket(entity);
+            }
         }
         return true;
     }
 
-    @EventHandler
 
     public void onFly(EntityTargetLivingEntityEvent event){
         if(event.getTarget().getType() == EntityType.PLAYER) {

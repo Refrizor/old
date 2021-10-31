@@ -5,6 +5,7 @@ import me.aziah.ranks.Rank;
 import me.aziah.server.Messages;
 import me.aziah.server.PlayerData;
 import me.aziah.server.PlayerStates;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +22,8 @@ public class QuitEvent implements Listener {
         States.getDiscoveredLab().remove(player.getUniqueId());
         States.getPowerLab().remove(player.getUniqueId());
         States.getApartment().remove(player.getName());
+        States.getDiscoveries().remove(player.getUniqueId());
+        States.getSatellite1().remove(player.getUniqueId());
 
         PlayerStates.getLobby().remove(player.getName());
         PlayerStates.getVanish().remove(player.getName());
@@ -37,45 +40,46 @@ public class QuitEvent implements Listener {
 
     private static void quitMessage(Player player, PlayerQuitEvent event) {
 
-        if (PlayerData.getStaffBranchID(player) == 3) {
-            event.setQuitMessage(Rank.ADMIN.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
+        int donorLevel = PlayerData.getDonorBranchID(player);
+        int staffLevel = PlayerData.getStaffBranchID(player);
+        int builderLevel = PlayerData.getBuilderBranchID(player);
+        int affiliateLevel = PlayerData.getAffiliateBranchID(player);
+
+        switch(staffLevel){
+            case 3:
+                event.setQuitMessage(Rank.ADMIN.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " left");
+                break;
+            case 2:
+                event.setQuitMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " left");
+                break;
+            case 1:
+                event.setQuitMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " left");
+                break;
         }
 
-        if (PlayerData.getDonorBranchID(player) == 0) {
-
-            if (PlayerData.getStaffBranchID(player) == 1) {
-                event.setQuitMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
-            }
-            if (PlayerData.getStaffBranchID(player) == 2) {
-                event.setQuitMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
-            }
-
-        } else {
-            /*
-            Else if they do have a donor rank:
-             */
-
-            if (PlayerData.getDonorBranchID(player) == 1) {
-                if (PlayerData.getStaffBranchID(player) == 0) {
-                    event.setQuitMessage(Rank.DONOR.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
+        switch (donorLevel) {
+            case 2:
+                if (staffLevel == 0) {
+                    event.setQuitMessage(Rank.DONOR2.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " left");
                 }
-            }
-            if (PlayerData.getDonorBranchID(player) == 2) {
-                if (PlayerData.getStaffBranchID(player) == 0) {
-                    event.setQuitMessage(Rank.DONOR2.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
+                break;
+            case 1:
+                if (staffLevel == 0) {
+                    event.setQuitMessage(Rank.DONOR.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " left");
                 }
-            }
-
-            if (PlayerData.getStaffBranchID(player) == 1) {
-                event.setQuitMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
-            }
-            if (PlayerData.getStaffBranchID(player) == 2) {
-                event.setQuitMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
-            }
+            case 0:
+                if (staffLevel == 0) {
+                    event.setQuitMessage(Rank.NONE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " left");
+                    break;
+                }
         }
 
-        if (PlayerData.getStaffBranchID(player) == 0 && PlayerData.getDonorBranchID(player) == 0) {
-            event.setQuitMessage(Rank.NONE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "left");
+        switch (affiliateLevel) {
+            case 1:
+                if (staffLevel == 0) {
+                    event.setQuitMessage(Rank.AFFILIATE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " left");
+                    break;
+                }
         }
     }
 }

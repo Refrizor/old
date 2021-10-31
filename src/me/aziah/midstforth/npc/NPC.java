@@ -15,14 +15,22 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 public class NPC {
 
-    public static void add(Player player, EntityType entityType, String name) {
-        LivingEntity livingEntity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), entityType);
+    public static void addFriendly(Player player, EntityType entityType, Villager.Profession profession, String name, boolean isSilent) {
+        try {
+            LivingEntity livingEntity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), entityType);
 
-        livingEntity.setAI(false);
-        livingEntity.setInvulnerable(true);
-        livingEntity.setCustomName(name);
-        Villager villager = (Villager) livingEntity;
-        villager.setProfession(Villager.Profession.WEAPONSMITH);
+            livingEntity.setAI(false);
+            livingEntity.setInvulnerable(true);
+            livingEntity.setCustomName(name);
+            Villager villager = (Villager) livingEntity;
+            villager.setProfession(profession);
+
+            if(isSilent){
+                villager.setSilent(true);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void giveQuest(Player player, Object quest, String description, long wait, boolean forceAssign){
@@ -42,6 +50,11 @@ public class NPC {
     public static void greet(Player player, String npc, String message){
         player.sendMessage(ChatColor.AQUA + npc + ChatColor.RESET + " " + message);
         PlayerUtils.playSound(player, Sound.ENTITY_VILLAGER_CELEBRATE, 0.9F);
+    }
+
+    public static void greetSad(Player player, String npc, String message){
+        player.sendMessage(ChatColor.AQUA + npc + ChatColor.RESET + " " + message);
+        PlayerUtils.playSound(player, Sound.ENTITY_VILLAGER_AMBIENT, 0.7F);
     }
 
     public static void greet2(Player player, String npc, String message, String message2){

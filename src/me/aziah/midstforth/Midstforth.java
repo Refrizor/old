@@ -15,7 +15,7 @@ public class Midstforth {
     //TODO: only insert in played_midstforth after intro sequence completion
 
     public static void startNewGame(Player player){
-        new Cinematics().introduction(player);
+        //new Cinematics().introduction(player);
     }
 
     public static boolean hasPlayed(Player player) {
@@ -101,12 +101,15 @@ public class Midstforth {
             Connection connection = DatabaseHandler.getConnection();
             PreparedStatement progression = connection.prepareStatement("SELECT discover_lab, lab_power FROM `progression_states` WHERE `uuid` = '" + player.getUniqueId() + "'");
             PreparedStatement location = connection.prepareStatement("SELECT name FROM locations WHERE uuid = '" + player.getUniqueId() + "'");
-            ResultSet resultSet = progression.executeQuery();
+            PreparedStatement discoveries = connection.prepareStatement("SELECT landmark FROM discoveries WHERE uuid = '" + player.getUniqueId() + "'");
+
+            ResultSet progressionRs = progression.executeQuery();
             int discoverLab = 0;
             int labPower = 0;
-            if(resultSet.next()){
-                discoverLab = resultSet.getInt(1);
-                labPower = resultSet.getInt(2);
+
+            if(progressionRs.next()){
+                discoverLab = progressionRs.getInt(1);
+                labPower = progressionRs.getInt(2);
             }
             if(discoverLab == 1){
                 States.getDiscoveredLab().put(player.getUniqueId(), true);
@@ -120,10 +123,49 @@ public class Midstforth {
                 States.getPowerLab().put(player.getUniqueId(), false);
             }
 
-            ResultSet resultSet1 = location.executeQuery();
-            if(resultSet1.next()){
-                String locationStr = resultSet1.getString(1);
+            ResultSet locationRs = location.executeQuery();
+            if(locationRs.next()){
+                String locationStr = locationRs.getString(1);
                 PlayerData.getLocation().put(player.getUniqueId(), locationStr);
+            }
+
+            ResultSet discoveriesRs = discoveries.executeQuery();
+            while (discoveriesRs.next()){
+
+                if(discoveriesRs.getString(1).contains("satellite1")){
+                    States.getDiscoveries().put(player.getUniqueId(), "satellite1");
+                    States.getSatellite1().add(player.getUniqueId());
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean hasDiscovered(Player player, String landmark){
+        try{
+            Connection connection = DatabaseHandler.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `discoveries` WHERE `uuid` = '" + player.getUniqueId() + "' AND `landmark` = '" + landmark + "'");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                return true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void discoverAdd(Player player, String landmark){
+        try{
+            Connection connection = DatabaseHandler.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `discoveries` WHERE `uuid` = '" + player.getUniqueId() + "' AND `landmark` = '" + landmark + "'");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.next()){
+                PreparedStatement insert = connection.prepareStatement("INSERT INTO `discoveries`(`uuid`, `landmark`) VALUES ('" + player.getUniqueId() + "','satellite1')");
+                insert.execute();
             }
         }catch(Exception e){
             e.printStackTrace();

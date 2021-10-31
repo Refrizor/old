@@ -19,12 +19,19 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class JoinEvent implements Listener {
+
+    ArrayList<UUID> array = new ArrayList<>();
+    HashMap<UUID, UUID> party = new HashMap<>();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
 
         //new Lobby().send(player, true);
 
@@ -62,49 +69,55 @@ public class JoinEvent implements Listener {
         Midstforth.cache(player);
 
 
+        array.add(player.getUniqueId());
+
+        JoinEvent joinEvent = new JoinEvent();
+        player.sendMessage(String.valueOf(joinEvent.array.size()));
+
     }
 
     private static void joinMessage(Player player, PlayerJoinEvent event) {
 
-        if (PlayerData.getStaffBranchID(player) == 3) {
-            event.setJoinMessage(Rank.ADMIN.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
+        int donorLevel = PlayerData.getDonorBranchID(player);
+        int staffLevel = PlayerData.getStaffBranchID(player);
+        int builderLevel = PlayerData.getBuilderBranchID(player);
+        int affiliateLevel = PlayerData.getAffiliateBranchID(player);
+
+        switch(staffLevel){
+            case 3:
+                event.setJoinMessage(Rank.ADMIN.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " joined");
+                break;
+            case 2:
+                event.setJoinMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " joined");
+                break;
+            case 1:
+                event.setJoinMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " joined");
+                break;
         }
 
-        if (PlayerData.getDonorBranchID(player) == 0) {
-
-            if (PlayerData.getStaffBranchID(player) == 1) {
-                event.setJoinMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
-            }
-            if (PlayerData.getStaffBranchID(player) == 2) {
-                event.setJoinMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
-            }
-
-        } else {
-            /*
-            Else if they do have a donor rank:
-             */
-
-            if (PlayerData.getDonorBranchID(player) == 1) {
-                if (PlayerData.getStaffBranchID(player) == 0) {
-                    event.setJoinMessage(Rank.DONOR.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
+        switch (donorLevel) {
+            case 2:
+                if (staffLevel == 0) {
+                    event.setJoinMessage(Rank.DONOR2.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " joined");
                 }
-            }
-            if (PlayerData.getDonorBranchID(player) == 2) {
-                if (PlayerData.getStaffBranchID(player) == 0) {
-                    event.setJoinMessage(Rank.DONOR2.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
+                break;
+            case 1:
+                if (staffLevel == 0) {
+                    event.setJoinMessage(Rank.DONOR.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " joined");
                 }
-            }
-
-            if (PlayerData.getStaffBranchID(player) == 1) {
-                event.setJoinMessage(Rank.HELPER.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
-            }
-            if (PlayerData.getStaffBranchID(player) == 2) {
-                event.setJoinMessage(Rank.MOD.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
-            }
+            case 0:
+                if (staffLevel == 0) {
+                    event.setJoinMessage(Rank.NONE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " joined");
+                    break;
+                }
         }
 
-        if(PlayerData.getStaffBranchID(player) == 0 && PlayerData.getDonorBranchID(player) == 0){
-            event.setJoinMessage(Rank.NONE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + Messages.SPACER_RESET.getMessage() + "joined");
+        switch (affiliateLevel) {
+            case 1:
+                if (staffLevel == 0) {
+                    event.setJoinMessage(Rank.AFFILIATE.getPrefix() + Messages.SPACER.getMessage() + player.getName() + ChatColor.GRAY + " joined");
+                    break;
+                }
         }
 
         if(!player.isOp()){

@@ -3,7 +3,10 @@ package me.aziah.midstforth.npc;
 import org.bukkit.entity.EntityType;
 
 public enum NPCTypes {
-    JOSEPH("Joseph", EntityType.VILLAGER);
+    JOSEPH("Joseph", EntityType.VILLAGER),
+
+    KYLE("Kyle", EntityType.VILLAGER),
+    AMOS("Amos", EntityType.VILLAGER);
 
     private final String name;
     private final EntityType type;

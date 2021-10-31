@@ -5,6 +5,9 @@ import me.aziah.midstforth.objectives.Objectives;
 import me.aziah.server.PlayerUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Cinematics {
+public class Cinematics implements Listener {
 
     private BukkitScheduler scheduler = Bukkit.getScheduler();
     private int id;
@@ -27,6 +30,7 @@ public class Cinematics {
         player.setPlayerTime(18000, true);
         player.setPlayerWeather(WeatherType.CLEAR);
         player.getInventory().clear();
+        player.playSound(player.getLocation(), "theme", 10000F, 1F);
 
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(Inferris.getInstance(), new Runnable() {
@@ -35,23 +39,43 @@ public class Cinematics {
                 PlayerUtils.sendTitle(player, ChatColor.RED + "2193 days", ChatColor.YELLOW + "since the worldwide outbreak");
                 player.teleport(new Location(Bukkit.getWorld("world"), 533.527, 66.30956, -805.664, 165.9F, 16.1F));
 
-                teleportPoint(player, new Location(Bukkit.getWorld("world"), -76, 33, -225), 70L);
+                teleportPoint(player, new Location(Bukkit.getWorld("world"), -76, 33, -225, 97.2F, 2.0F), 80L, 10L, 100);
 
             }
         }, 120L);
     }
 
-    public void teleportPoint(Player player, Location location, long time){
-        id = scheduler.scheduleSyncDelayedTask(Inferris.getInstance(), new Runnable() {
+    public static void teleportPoint(Player player, Location location, long whenToBlind, long whenToTeleport, int blindDuration){
+        BukkitScheduler scheduler = Bukkit.getScheduler();
+
+        scheduler.scheduleSyncDelayedTask(Inferris.getInstance(), new Runnable() {
             @Override
             public void run() {
-                player.teleport(location);
-                scheduler.cancelTask(id);
+
+                PlayerUtils.blind(player, blindDuration);
+
+                scheduler.scheduleSyncDelayedTask(Inferris.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+                        player.teleport(location);
+
+                        inCinematic.remove(player.getUniqueId());
+                    }
+                }, whenToTeleport);
             }
-        }, time);
+        }, whenToBlind);
     }
 
     public static List<UUID> getInCinematic() {
         return inCinematic;
+    }
+
+
+    public void onMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+
+        if (inCinematic.contains(player.getUniqueId())) {
+            event.setCancelled(true);
+        }
     }
 }
